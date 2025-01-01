@@ -1,0 +1,35 @@
+3. Implement Naïve Bayesian Classifier
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import LabelEncoder
+from sklearn.naive_bayes import GaussianNB
+
+dataset=pd.read_csv("C:\\Users\\aadar\\OneDrive\\Desktop\\4th Sem\\ML\\tennisdata.csv")
+X=dataset.iloc[:,:-1]
+y=dataset.iloc[:,-1]
+
+X.head()
+
+le_outlook=LabelEncoder()
+X.Outlook=le_outlook.fit_transform(X.Outlook)
+
+le_temperature=LabelEncoder()
+X.Temperature=le_temperature.fit_transform(X.Temperature)
+
+le_humidity=LabelEncoder()
+X.Humidity=le_humidity.fit_transform(X.Humidity)
+
+le_windy=LabelEncoder()
+X.Windy=le_windy.fit_transform(X.Windy)
+
+le_play=LabelEncoder()
+y=le_play.fit_transform(y)
+print(X.head())
+print(y)
+
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2)
+model=GaussianNB().fit(X_train,y_train)
+
+ypred=model.predict(X_test)
+print("Accuracy",accuracy_score(y_test,ypred))

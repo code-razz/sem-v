@@ -1,0 +1,36 @@
+4. Bayesian Network
+import pandas as pd
+data=pd.read_csv('C:\\Users\\aadar\\OneDrive\\Desktop\\4th Sem\\ML\\ds4 (1).csv')
+prob_age={0:0.1, 1:0.2,2:0.3,3:0.2,3:0.2}
+prob_gender={0:0.4,1:0.6}
+prob_family={0:0.7,1:0.3}
+prob_diet={0:0.5,1:0.5}
+prob_lifestyle={0:0.1,1:0.3,2:0.4,3:0.2}
+prob_cholestrol={0:0.4,1:0.3,2:0.3}
+prob_heart_disease={
+    (0,0,0,0,0,0):0.1,
+    (1,1,1,1,1,1):0.9
+}
+def calculate_probability(age,gender,gamily,diet,lifestyle,cholestrol):
+    key=(age,gender,gamily,diet,lifestyle,cholestrol)
+    if key in prob_heart_disease:
+        return prob_heart_disease[key]
+    else:
+        return 0.5
+    
+print('For Age enter SuperSeniorCitizen: 0, SeniorCitizen:1, MiddleAged: 2, Youth:3, Teen:4')
+print('For Gender enter Male:0, Female:1')
+print('For Family History enter Yes:1, No:0')
+print('For Diet enter High:0, Medium:1')
+print('For LifeStyle enter Athlete:0, Active: 1, Moderate: 2, Sedentary:3')
+print('For Cholesterol enter High:0, BorderLine:1, Normal:2')
+
+age=int(input('Enter Age: '))
+gender=int(input('Enter gender: '))
+family=int(input('Enter family history: '))
+diet=int(input('Enter diet: '))
+lifestyle=int(input('Enter lifesstyle: '))
+cholestrol=int(input('Enter Cholestrol: '))
+
+probability=calculate_probability(age,gender,family,diet,lifestyle,cholestrol)
+print(f"Probability of heart disease is: {probability:.2f}")

@@ -1,0 +1,34 @@
+2. KNN
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+import pandas as pd 
+
+names=['sepal-length','sepal-width','petal-length','petal-width','CLass']
+datasets=pd.read_csv("C:\\Users\\aadar\\OneDrive\\Desktop\\4th Sem\\ML\\iris-dataset.csv")
+
+X=datasets.iloc[:,:-1]
+y=datasets.iloc[:,-1]
+
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2)
+
+model=KNeighborsClassifier(n_neighbors=3).fit(X_train,y_train)
+ypred=model.predict(X_test)
+
+i=0
+print("%-25s %-25s %-25s" %('Original Label','Predicted Label','Correct/Incorrect'))
+print('-'*75)
+for label in y_test:
+    print('%-25s %-25s'%(label,ypred[i]),end="")
+    if(label==ypred[i]):
+        print('%-25s ' %('Correct'))
+    else:
+        print('%-25s'%('Incorrect'))
+    i=i+1
+
+print("-------------------------------------------------------------------")
+print("Confusion Matrix",metrics.confusion_matrix(y_test,ypred))
+print("-------------------------------------------------------------------")
+print("Classification Report",metrics.classification_report(y_test,ypred))
+print("-------------------------------------------------------------------")
+print("Accuracy Score",metrics.accuracy_score(y_test,ypred))

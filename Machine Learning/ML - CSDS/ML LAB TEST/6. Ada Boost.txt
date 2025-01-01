@@ -1,0 +1,27 @@
+6. Ada Boost
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+from sklearn.metrics import accuracy_score,classification_report
+from sklearn.preprocessing import StandardScaler
+
+df=load_iris()
+X=df.data
+y=df.target
+target_names=df.target_names
+
+scaler=StandardScaler()
+X_scaled=scaler.fit_transform(X)
+
+X_train,X_test,y_train,y_test=train_test_split(X_scaled,y,test_size=0.3,random_state=42)
+base_estimators=DecisionTreeClassifier(max_depth=1)
+model=AdaBoostClassifier(estimator=base_estimators,n_estimators=50,algorithm='SAMME',random_state=42).fit(X_train,y_train)
+ypred=model.predict(X_test)
+accuracy=accuracy_score(y_test,ypred)
+classification=classification_report(y_test,ypred,target_names=target_names)
+
+print("Accuracy: {:.2f}%".format(accuracy))
+print("Classification report: ",classification)
